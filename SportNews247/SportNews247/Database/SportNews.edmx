@@ -1,0 +1,251 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="SportNews247Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="DanhMucTin">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="tieu_de" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="vi_tri_hien" Type="int" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="TinTuc">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="id_dm" Type="varchar" MaxLength="50" />
+          <Property Name="id_user" Type="varchar" MaxLength="50" />
+          <Property Name="tieu_de" Type="nvarchar" MaxLength="200" />
+          <Property Name="img" Type="varchar" MaxLength="300" />
+          <Property Name="tom_tat" Type="nvarchar" MaxLength="700" />
+          <Property Name="noi_dung" Type="ntext" />
+          <Property Name="ngay_tao" Type="datetime" />
+          <Property Name="trang_thai" Type="int" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" />
+          <Property Name="per" Type="int" />
+        </EntityType>
+        <Association Name="FK_TinTuc_DanhMucTin">
+          <End Role="DanhMucTin" Type="Self.DanhMucTin" Multiplicity="0..1" />
+          <End Role="TinTuc" Type="Self.TinTuc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DanhMucTin">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="TinTuc">
+              <PropertyRef Name="id_dm" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TinTuc_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="TinTuc" Type="Self.TinTuc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="TinTuc">
+              <PropertyRef Name="id_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SportNews247ModelStoreContainer">
+          <EntitySet Name="DanhMucTin" EntityType="Self.DanhMucTin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TinTuc" EntityType="Self.TinTuc" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_TinTuc_DanhMucTin" Association="Self.FK_TinTuc_DanhMucTin">
+            <End Role="DanhMucTin" EntitySet="DanhMucTin" />
+            <End Role="TinTuc" EntitySet="TinTuc" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TinTuc_User" Association="Self.FK_TinTuc_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="TinTuc" EntitySet="TinTuc" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SportNews247Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="DanhMucTin">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="tieu_de" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="vi_tri_hien" Type="Int32" />
+          <NavigationProperty Name="TinTucs" Relationship="Self.FK_TinTuc_DanhMucTin" FromRole="DanhMucTin" ToRole="TinTuc" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="TinTuc">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="id_dm" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="id_user" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="tieu_de" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="img" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="tom_tat" Type="String" MaxLength="700" FixedLength="false" Unicode="true" />
+          <Property Name="noi_dung" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ngay_tao" Type="DateTime" Precision="3" />
+          <Property Name="trang_thai" Type="Int32" />
+          <NavigationProperty Name="DanhMucTin" Relationship="Self.FK_TinTuc_DanhMucTin" FromRole="TinTuc" ToRole="DanhMucTin" />
+          <NavigationProperty Name="User" Relationship="Self.FK_TinTuc_User" FromRole="TinTuc" ToRole="User" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="per" Type="Int32" />
+          <NavigationProperty Name="TinTucs" Relationship="Self.FK_TinTuc_User" FromRole="User" ToRole="TinTuc" />
+        </EntityType>
+        <Association Name="FK_TinTuc_DanhMucTin">
+          <End Role="DanhMucTin" Type="Self.DanhMucTin" Multiplicity="0..1" />
+          <End Role="TinTuc" Type="Self.TinTuc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DanhMucTin">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="TinTuc">
+              <PropertyRef Name="id_dm" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TinTuc_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="TinTuc" Type="Self.TinTuc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="TinTuc">
+              <PropertyRef Name="id_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SportNews247Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="DanhMucTins" EntityType="Self.DanhMucTin" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="TinTucs" EntityType="Self.TinTuc" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK_TinTuc_DanhMucTin" Association="Self.FK_TinTuc_DanhMucTin">
+            <End Role="DanhMucTin" EntitySet="DanhMucTins" />
+            <End Role="TinTuc" EntitySet="TinTucs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TinTuc_User" Association="Self.FK_TinTuc_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="TinTuc" EntitySet="TinTucs" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SportNews247ModelStoreContainer" CdmEntityContainer="SportNews247Entities">
+          <EntitySetMapping Name="DanhMucTins">
+            <EntityTypeMapping TypeName="SportNews247Model.DanhMucTin">
+              <MappingFragment StoreEntitySet="DanhMucTin">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="tieu_de" ColumnName="tieu_de" />
+                <ScalarProperty Name="vi_tri_hien" ColumnName="vi_tri_hien" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="SportNews247Model.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TinTucs">
+            <EntityTypeMapping TypeName="SportNews247Model.TinTuc">
+              <MappingFragment StoreEntitySet="TinTuc">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="id_dm" ColumnName="id_dm" />
+                <ScalarProperty Name="id_user" ColumnName="id_user" />
+                <ScalarProperty Name="tieu_de" ColumnName="tieu_de" />
+                <ScalarProperty Name="img" ColumnName="img" />
+                <ScalarProperty Name="tom_tat" ColumnName="tom_tat" />
+                <ScalarProperty Name="noi_dung" ColumnName="noi_dung" />
+                <ScalarProperty Name="ngay_tao" ColumnName="ngay_tao" />
+                <ScalarProperty Name="trang_thai" ColumnName="trang_thai" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="SportNews247Model.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="per" ColumnName="per" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

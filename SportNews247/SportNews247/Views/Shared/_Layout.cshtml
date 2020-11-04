@@ -1,0 +1,260 @@
+﻿@using SportNews247.Database
+
+@{
+    User user = Session["User"] as User;
+    var db = new SportNews247Entities();
+    List<DanhMucTin> lst_dm = db.DanhMucTins.ToList();
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Cập nhật tin tức thể thao nhanh nhất, chính xác nhất 24/7</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Bootstrap News Template - Free HTML Templates" name="keywords">
+    <meta content="Bootstrap News Template - Free HTML Templates" name="description">
+
+    <!-- Favicon -->
+    <link href="~/Source/img/logo.png" rel="icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600&display=swap" rel="stylesheet">
+
+    <!-- CSS Libraries -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="~/Source/lib/slick/slick.css" rel="stylesheet">
+    <link href="~/Source/lib/slick/slick-theme.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="~/Source/css/style.css" rel="stylesheet">
+    <script src="https://cdn.ckeditor.com/4.15.0/standard/ckeditor.js"></script>
+</head>
+<body>   
+    <div class="top-bar">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="tb-contact">
+                        <p><i class="fas fa-envelope"></i>thethao247@vtv.vn</p>
+                        <p><i class="fas fa-phone-alt"></i>+84 345 6789</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="tb-menu">
+                        @if (user != null)
+                        {
+                            <a href="">Xin chào @user.name</a>
+                            <a href="@Url.Action("LogOut","Login")">Thoát</a>
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("Login","Login")">Đăng nhập</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Brand Start -->
+    <div class="brand">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-3 col-md-4">
+                    <div class="b-logo">
+                        <a href="@Url.Action("Index","Home")">
+                            <img src="https://media.thethao247.vn/upload/hoannh/2017/04/18/banner1492506195.png" alt="Logo">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4">
+                    <div class="b-ads">
+                        <a href="@Url.Action("Index","Home")">
+                            <img src="https://media.bongda.com.vn/files/toan.vu/2020/03/06/esxdmwjwoaajo5-0533.jpg" alt="Ads">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4">
+                    <div class="b-ads">
+                        <a href="@Url.Action("Index","Home")">
+                            <img src="https://baokhanhhoa.vn/dataimages/202005/original/images5404041_La_Liga__ang_r_t_kh_____h_y_m_a_gi_i_1.jpg" alt="Ads">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4">
+                    <div class="b-ads">
+                        <a href="https://htmlcodex.com">
+                            <img src="https://cdn.bongdaplus.vn/Assets/Media/2020/04/30/26/bundesliga.jpg" alt="Ads">
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4">
+                    <div class="b-search">
+                        @using (Html.BeginForm("Search", "Home", FormMethod.Post))
+                        {
+                            <input type="text" name="search" placeholder="Tìm kiếm">
+                            <button type="submit"><i class="fa fa-search"></i></button>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Brand End -->
+    <!-- Nav Bar Start -->
+    <div class="nav-bar">
+        <div class="container">
+            <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+                <a href="@Url.Action("Index","Home")" class="navbar-brand">Trang chủ</a>
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                    <div class="navbar-nav mr-auto">
+                        <a href="@Url.Action("Index","Home")" class="nav-item nav-link">Trang chủ</a>
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Tin tức</a>
+                            <div class="dropdown-menu">
+
+                                @foreach (var item in lst_dm)
+                                {                                    
+                                    <a class="danh_muc dropdown-item" href="@Url.Action("LocTinTuc","home", new {id = item.id, title = item.tieu_de.ToLower().Replace(" ", "-")})">@item.tieu_de</a>                                    
+                                }
+                            </div>
+                        </div>
+                        <a href="/home/tintuc" class="nav-item nav-link">Tổng hợp</a>
+                        <a href="/home/contact" class="nav-item nav-link">Liên hệ</a>
+                        @if (string.Equals(user?.username.Trim(), "admin", StringComparison.InvariantCultureIgnoreCase))
+                        {
+                            <a class="nav-item nav-link" href="@Url.Action("GetAllTin", "Admin")">Quản lý</a>
+                        }
+                    </div>
+                    <div class="social ml-auto">
+                        <a href=""><i class="fab fa-twitter"></i></a>
+                        <a href=""><i class="fab fa-facebook-f"></i></a>
+                        <a href=""><i class="fab fa-linkedin-in"></i></a>
+                        <a href=""><i class="fab fa-instagram"></i></a>
+                        <a href=""><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <!-- Nav Bar End -->
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+    </div>
+    <!-- Footer Start -->
+    <div class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-widget">
+                        <h3 class="title">Liên lạc</h3>
+                        <div class="contact-info">
+                            <p><i class="fa fa-map-marker"></i>96 Định Công</p>
+                            <p><i class="fa fa-envelope"></i>thethao247@vtv.vn</p>
+                            <p><i class="fa fa-phone"></i>+84-456-7890</p>
+                            <div class="social">
+                                <a href=""><i class="fab fa-twitter"></i></a>
+                                <a href=""><i class="fab fa-facebook-f"></i></a>
+                                <a href=""><i class="fab fa-linkedin-in"></i></a>
+                                <a href=""><i class="fab fa-instagram"></i></a>
+                                <a href=""><i class="fab fa-youtube"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-widget">
+                        <h3 class="title">Liên kết</h3>
+                        <ul>
+                            <li><a href="https://www.24h.com.vn/the-thao-c101.html">Thể thao 24h</a></li>
+                            <li><a href="https://vnexpress.net/the-thao">Thể thao Vnexpress</a></li>
+                            <li><a href="https://zingnews.vn/the-thao.html">Zing thể thao</a></li>
+                            <li><a href="https://thethao247.vn/">Thể thao 247</a></li>
+                            <li><a href="#">Sport News</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-widget">
+                        <h3 class="title">Liên kết nhanh</h3>
+                        <ul>
+                            <li><a href="#">Bóng đá</a></li>
+                            <li><a href="#">Quần vợt</a></li>
+                            <li><a href="#">Bóng rổ</a></li>
+                            <li><a href="#">Bóng chày</a></li>
+                            <li><a href="#">Bóng bàn</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-widget">
+                        <h3 class="title">Bản tin</h3>
+                        <div class="newsletter">
+                            <p>
+                                Chuyên đề kết thúc chuyên ngành :))
+                            </p>
+                            <form>
+                                <input class="form-control" type="email" placeholder="Your email here">
+                                <button class="btn">Gửi</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
+    <!-- Footer Menu Start -->
+    <div class="footer-menu">
+        <div class="container">
+            <div class="f-menu">
+                <a href="">Terms of use</a>
+                <a href="">Privacy policy</a>
+                <a href="">Cookies</a>
+                <a href="">Accessibility help</a>
+                <a href="">Advertise with us</a>
+                <a href="">Contact us</a>
+            </div>
+        </div>
+    </div>
+    <!-- Footer Menu End -->
+    <!-- Footer Bottom Start -->
+    <div class="footer-bottom">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 copyright">
+                    <p>Copyright &copy; <a href="https://htmlcodex.com">Bach-Bluestack</a></p>
+                </div>
+
+                <div class="col-md-6 template-by">
+                    <p>Fithou <a href="https://htmlcodex.com">Student</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer Bottom End -->
+    <!-- Back to Top -->
+    <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Source/lib/easing/easing.min.js"></script>
+    <script src="~/Source/lib/slick/slick.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="~/Source/js/main.js"></script>
+    @Scripts.Render("~/bundles/jquery")
+    @*@Scripts.Render("~/bundles/bootstrap")*@
+    @RenderSection("scripts", required: false)
+</body>
+</html>

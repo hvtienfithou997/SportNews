@@ -1,0 +1,80 @@
+﻿@model IEnumerable<SportNews247.Database.TinTuc>
+@{
+    ViewBag.Title = "Home Page";
+}
+@if (Model != null)
+{
+    <!-- Top News Start-->
+    <div class="top-news">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 tn-left">
+                    <div class="row tn-slider">
+                        @foreach (var item in Model)
+                        {
+                            <div class="col-md-6">
+                                <div class="tn-img">
+                                    <img class="img-responsive" src="@item.img" />
+                                    <div class="tn-title">
+                                        <a href="@Url.Action("Xemtintuc","home", new {id = item.id, title = item.tieu_de.ToLower().Replace(" ", "-")})" title="View">@item.tieu_de</a>
+                                    </div>
+                                </div>
+                                <p class="text-dark font-weight-bold">
+                                    @item.tom_tat
+                                </p>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <div class="col-md-6 tn-right">
+                    <div class="row">
+                        @foreach (var item in Model.Take(4))
+                        {
+                            <div class="col-md-6">
+                                <div class="tn-img fix-height">
+                                    <img class="img-responsive" src="@item.img" />
+                                    <div class="tn-title">
+                                        @*<a href="/home/xemtintuc?id=@item.id">@item.tieu_de</a>*@
+                                        <a href="@Url.Action("Xemtintuc","home", new {id = item.id, title = item.tieu_de.ToLower().Replace(" ", "-")})" title="View">@item.tieu_de</a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Top News End-->
+    <hr>
+    <div class="cat-news">
+        <div class="container">
+            <div class="row">
+                @if (ViewBag.NhomTin != null)
+                {
+                    foreach (var item in ViewBag.NhomTin)
+                    {
+                        <div class="col-md-6">
+                            <h2>@item.id_dm</h2>
+                            <div class="row cn-slider">
+                                @foreach (var k in item.tin_tuc)
+                                {
+                                    <div class="col-md-6">
+                                        <div class="cn-img">
+                                            <img src="@k.img" />
+                                            <div class="cn-title">
+                                                <a href="@Url.Action("Xemtintuc","home", new {id = k.id, title = k.tieu_de.ToLower().Replace(" ", "-")})" title="View">@k.tieu_de</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+
+}

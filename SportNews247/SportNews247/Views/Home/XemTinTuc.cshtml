@@ -1,0 +1,240 @@
+﻿@using SportNews247.Database
+@model SportNews247.Database.TinTuc
+
+@{
+    ViewBag.Title = "XemTinTuc";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="single-news">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="sn-container">
+                    <div class="sn-img">
+                        <img src="@Model.img" class="img-responsive" style="height: 400px" />
+                    </div>
+                    <div class="sn-content">
+                        <h2 class="sn-title">@Model.tieu_de</h2>
+                        <h6 style="opacity: 0.4">@Model.ngay_tao</h6>
+                        @Html.Raw(Model.noi_dung)
+                    </div>
+                </div>
+                <div class="sn-related">
+                    <h2>Có thể bạn quan tâm</h2>
+                    <div class="row sn-slider">
+                        @if (ViewBag.QuanTam != null)
+                        {
+                            foreach (var item in ViewBag.QuanTam as List<TinTuc>)
+                            {
+                                <div class="col-md-4">
+                                <div class="sn-img">
+                                    <img class="img-responsive" style="height: 170px" src="@item.img"/>
+                                    <div class="sn-title">
+                                        <a href="@Url.Action("Xemtintuc","home", new {id = item.id, title = item.tieu_de.ToLower().Replace(" ", "-")})" title="View">@item.tieu_de</a>
+                                    </div>
+                                </div>
+                            </div>
+                            }
+                        }
+                       
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="sidebar">
+                    <div class="sidebar-widget">
+                        <h2 class="sw-title">Cùng danh mục</h2>
+                        <div class="news-list">
+
+                            @if (ViewBag.CungDanhMuc != null)
+                            {
+                                foreach (var item in ViewBag.CungDanhMuc as List<TinTuc>)
+                                {
+                                    <div class="nl-item">
+                                        <div class="nl-img">
+                                            <img src="@item.img" />
+                                        </div>
+                                        <div class="nl-title">
+                                            <a href="@Url.Action("Xemtintuc","home", new {id = item.id, title = item.tieu_de.ToLower().Replace(" ", "-")})" title="View">@item.tieu_de</a>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    </div>
+
+                    <div class="sidebar-widget">
+                        <div class="image">
+                            <a href="https://htmlcodex.com"><img src="~/Source/img/ads-2.jpg" alt="Image"></a>
+                        </div>
+                    </div>
+
+                    <div class="sidebar-widget">
+                        <div class="tab-news">
+                            <ul class="nav nav-pills nav-justified">
+                                <li class="nav-item">
+                                    <a class="nav-link active" data-toggle="pill" href="#featured">Featured</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="pill" href="#popular">Popular</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="pill" href="#latest">Latest</a>
+                                </li>
+                            </ul>
+
+                            <div class="tab-content">
+                                <div id="featured" class="container tab-pane active">
+                                    <div class="tn-news">
+                                        <div class="tn-img">
+                                            <img src="~/Source/img/news-350x223-1.jpg" />
+                                        </div>
+                                        <div class="tn-title">
+                                            <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
+                                        </div>
+                                    </div>
+                                    <div class="tn-news">
+                                        <div class="tn-img">
+                                            <img src="~/Source/img/news-350x223-2.jpg" />
+                                        </div>
+                                        <div class="tn-title">
+                                            <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
+                                        </div>
+                                    </div>
+                                    <div class="tn-news">
+                                        <div class="tn-img">
+                                            <img src="~/Source/img/news-350x223-3.jpg" />
+                                        </div>
+                                        <div class="tn-title">
+                                            <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
+                                        </div>
+                                    </div>
+                                    <div class="tn-news">
+                                        <div class="tn-img">
+                                            <img src="~/Source/img/news-350x223-4.jpg" />
+                                        </div>
+                                        <div class="tn-title">
+                                            <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
+                                        </div>
+                                    </div>
+                                    <div class="tn-news">
+                                        <div class="tn-img">
+                                            <img src="~/Source/img/news-350x223-5.jpg" />
+                                        </div>
+                                        <div class="tn-title">
+                                            <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="popular" class="container tab-pane fade">
+                                    <div class="tn-news">
+                                        <div class="tn-img">
+                                            <img src="~/Source/img/news-350x223-4.jpg" />
+                                        </div>
+                                        <div class="tn-title">
+                                            <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
+                                        </div>
+                                    </div>
+                                    <div class="tn-news">
+                                        <div class="tn-img">
+                                            <img src="~/Source/img/news-350x223-3.jpg" />
+                                        </div>
+                                        <div class="tn-title">
+                                            <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
+                                        </div>
+                                    </div>
+                                    <div class="tn-news">
+                                        <div class="tn-img">
+                                            <img src="~/Source/img/news-350x223-2.jpg" />
+                                        </div>
+                                        <div class="tn-title">
+                                            <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
+                                        </div>
+                                    </div>
+                                    <div class="tn-news">
+                                        <div class="tn-img">
+                                            <img src="~/Source/img/news-350x223-1.jpg" />
+                                        </div>
+                                        <div class="tn-title">
+                                            <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
+                                        </div>
+                                    </div>
+                                    <div class="tn-news">
+                                        <div class="tn-img">
+                                            <img src="~/Source/img/news-350x223-2.jpg" />
+                                        </div>
+                                        <div class="tn-title">
+                                            <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="latest" class="container tab-pane fade">
+                                    <div class="tn-news">
+                                        <div class="tn-img">
+                                            <img src="~/Source/img/news-350x223-3.jpg" />
+                                        </div>
+                                        <div class="tn-title">
+                                            <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
+                                        </div>
+                                    </div>
+                                    <div class="tn-news">
+                                        <div class="tn-img">
+                                            <img src="~/Source/img/news-350x223-4.jpg" />
+                                        </div>
+                                        <div class="tn-title">
+                                            <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
+                                        </div>
+                                    </div>
+                                    <div class="tn-news">
+                                        <div class="tn-img">
+                                            <img src="~/Source/img/news-350x223-5.jpg" />
+                                        </div>
+                                        <div class="tn-title">
+                                            <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
+                                        </div>
+                                    </div>
+                                    <div class="tn-news">
+                                        <div class="tn-img">
+                                            <img src="~/Source/img/news-350x223-4.jpg" />
+                                        </div>
+                                        <div class="tn-title">
+                                            <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
+                                        </div>
+                                    </div>
+                                    <div class="tn-news">
+                                        <div class="tn-img">
+                                            <img src="~/Source/img/news-350x223-3.jpg" />
+                                        </div>
+                                        <div class="tn-title">
+                                            <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                  
+
+                    <div class="sidebar-widget">
+                        <h2 class="sw-title">Tags</h2>
+                        <div class="tags">
+                            @if (ViewBag.DanhMuc != null)
+                            {
+                                foreach (var item in ViewBag.DanhMuc as List<DanhMucTin>)
+                                {
+                                    <a href="/home/loctintuc?id=@item.id">#@(item.tieu_de)</a>
+                                }
+                            }
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
