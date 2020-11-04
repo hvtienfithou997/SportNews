@@ -95,6 +95,11 @@ namespace SportNews247.Controllers
             return RedirectToAction("GetAllTin");
         }
 
+        public ActionResult TaiKhoan()
+        {
+            return View(db.Users.ToList());
+        }
+
         public enum TrangThai
         {
             BI_TU_CHOI,

@@ -30,7 +30,7 @@
     <link href="~/Source/css/style.css" rel="stylesheet">
     <script src="https://cdn.ckeditor.com/4.15.0/standard/ckeditor.js"></script>
 </head>
-<body>   
+<body>
     <div class="top-bar">
         <div class="container">
             <div class="row">
@@ -119,8 +119,8 @@
                             <div class="dropdown-menu">
 
                                 @foreach (var item in lst_dm)
-                                {                                    
-                                    <a class="danh_muc dropdown-item" href="@Url.Action("LocTinTuc","home", new {id = item.id, title = item.tieu_de.ToLower().Replace(" ", "-")})">@item.tieu_de</a>                                    
+                                {
+                                    <a class="danh_muc dropdown-item" href="@Url.Action("LocTinTuc","home", new {id = item.id, title = item.tieu_de.ToLower().Replace(" ", "-")})">@item.tieu_de</a>
                                 }
                             </div>
                         </div>
@@ -128,7 +128,14 @@
                         <a href="/home/contact" class="nav-item nav-link">Liên hệ</a>
                         @if (string.Equals(user?.username.Trim(), "admin", StringComparison.InvariantCultureIgnoreCase))
                         {
-                            <a class="nav-item nav-link" href="@Url.Action("GetAllTin", "Admin")">Quản lý</a>
+
+                            <div class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Quản lý</a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="/admin/getalltin">Ds tin tức</a>
+                                    <a class="dropdown-item" href="/admin/taikhoan">Ds tài khoản thành viên</a>
+                                </div>
+                            </div>
                         }
                     </div>
                     <div class="social ml-auto">
