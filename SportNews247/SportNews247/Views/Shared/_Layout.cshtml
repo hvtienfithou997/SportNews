@@ -137,6 +137,10 @@
                                 </div>
                             </div>
                         }
+                        @if (user != null && user.username != "admin")
+                        {
+                            <a href="/user/mynews" class="nav-item nav-link">Cá nhân</a>
+                        }
                     </div>
                     <div class="social ml-auto">
                         <a href=""><i class="fab fa-twitter"></i></a>

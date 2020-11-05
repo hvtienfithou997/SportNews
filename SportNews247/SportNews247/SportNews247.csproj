@@ -132,6 +132,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Database\DanhMucTin.cs">
       <DependentUpon>SportNews.tt</DependentUpon>
     </Compile>
@@ -258,6 +259,10 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Shared\NhomTinTuc.cshtml" />
     <Content Include="Views\Admin\TaiKhoan.cshtml" />
+    <Content Include="Views\Admin\AddUser.cshtml" />
+    <Content Include="Views\Admin\EditUser.cshtml" />
+    <Content Include="Views\User\MyNews.cshtml" />
+    <Content Include="Views\User\ThemTinMoi.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

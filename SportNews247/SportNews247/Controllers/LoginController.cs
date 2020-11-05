@@ -55,7 +55,7 @@ namespace SportNews247.Controllers
                 TempData["message"] = "Đăng nhập thất bại";
             }
 
-            return View();
+            return RedirectToAction("Login");
         }
 
         public ActionResult LogOut()

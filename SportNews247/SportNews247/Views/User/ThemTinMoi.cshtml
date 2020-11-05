@@ -5,13 +5,15 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @{ User user = Session["User"] as User; }
-<h2>Thêm tin mới, bạn đang đăng nhập bằng tài khoản admin</h2>
+<h2>Thêm tin mới</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
+
+        <h6 class="text-danger">Sau khi thêm, bạn phải chờ xét duyệt để tin được hiển thị</h6>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group d-none">
@@ -41,12 +43,12 @@
             <div class="col-md-10">
 
                 @*<input type="text" class="form-control" disabled readonly value="@user.name" />
-                <input type="text" class="form-control d-none" disabled readonly name="id_user" value="@user.id" />*@
-                
+                    <input type="text" class="form-control d-none" disabled readonly name="id_user" value="@user.id" />*@
+
                 <select class="form-control" name="id_user" id="id_user">
                     <option selected value="@user.id">@user.name</option>
                 </select>
-                
+
             </div>
         </div>
 
@@ -106,7 +108,7 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "GetAllTin")
+    @Html.ActionLink("Back to List", "MyNews")
 </div>
 
 <script>

@@ -4,7 +4,9 @@
     ViewBag.Title = "TaiKhoan";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<br />
+@Html.ActionLink("Tạo mới", "AddUser", new { @type = "submit", @class = "btn btn-success" })
+<br />
 <div class="table-responsive">
     <table class="table">
         <tr>
@@ -23,22 +25,21 @@
 
         @foreach (var item in Model)
         {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.username)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.per)
-        </td>
-        <td>
-            @*@Html.ActionLink("Duyệt tin", "CheckNew", new { id = item.id }, new { @type = "submit", @class = "btn btn-success" })
-            @Html.ActionLink("Từ chối", "CheckNew", new { id = item.id}, new { @type = "submit", @class = "btn btn-danger" })*@
-            @Html.ActionLink("Xóa tài khoản", "Delete", new { id = item.id })
-        </td>
-    </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.username)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.per)
+                </td>
+                <td>
+                    @Html.ActionLink("Sửa", "EditUser", new { id = item.id }, new { @class = "btn btn-warning" })
+                    @Html.ActionLink("Xóa tài khoản", "DeleteUser", new { id = item.id })
+                </td>
+            </tr>
         }
     </table>
 </div>

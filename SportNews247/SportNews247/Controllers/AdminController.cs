@@ -41,6 +41,8 @@ namespace SportNews247.Controllers
                     }
                 }
             }
+
+            ViewBag.CountNews = allTin.Count;
             return View(allTin);
         }
 
@@ -98,6 +100,59 @@ namespace SportNews247.Controllers
         public ActionResult TaiKhoan()
         {
             return View(db.Users.ToList());
+        }
+
+        // Them tai khoan thanh vien
+        public ActionResult AddUser()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult AddUser(User u)
+        {
+            if (u.per < 5 && u.per > 0)
+            {
+                u.id = Guid.NewGuid().ToString();
+                db.Users.Add(u);
+                db.SaveChanges();
+                return RedirectToAction("TaiKhoan");
+            }
+
+            return View();
+        }
+
+        // Sua thong tin tai khoan
+        public ActionResult EditUser(string id)
+        {
+            var user = db.Users.Find(id);
+            if (user == null)
+            {
+                TempData["Message"] = $"Không có user với mã số {id}";
+                return RedirectToAction("TaiKhoan");
+            }
+            return View(user);
+        }
+
+        [HttpPost]
+        public ActionResult EditUser(User u)
+        {
+            if (u?.username.Trim().Length == 0 && u.password.Trim().Length == 0)
+            {
+                TempData["Message"] = $"Bạn cần nhập đầy đủ thông tin";
+            }
+
+            db.SaveChanges();
+            return View();
+        }
+
+        
+        public ActionResult DeleteUser(string id)
+        {
+            var user = db.Users.Find(id);
+            if (user != null) db.Users.Remove(user);
+            db.SaveChanges();
+            return RedirectToAction("TaiKhoan");
         }
 
         public enum TrangThai

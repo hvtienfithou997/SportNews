@@ -158,8 +158,8 @@ F:\SportNews\SportNews247\SportNews247\bin\System.Web.WebPages.Razor.xml
 F:\SportNews\SportNews247\SportNews247\bin\Newtonsoft.Json.xml
 F:\SportNews\SportNews247\SportNews247\bin\Antlr3.Runtime.pdb
 F:\SportNews\SportNews247\SportNews247\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-F:\SportNews\SportNews247\SportNews247\obj\Debug\SportNews247.csprojAssemblyReference.cache
 F:\SportNews\SportNews247\SportNews247\obj\Debug\SportNews247.csproj.CoreCompileInputs.cache
 F:\SportNews\SportNews247\SportNews247\obj\Debug\SportNews247.csproj.CopyComplete
 F:\SportNews\SportNews247\SportNews247\obj\Debug\SportNews247.dll
 F:\SportNews\SportNews247\SportNews247\obj\Debug\SportNews247.pdb
+F:\SportNews\SportNews247\SportNews247\obj\Debug\SportNews247.csprojAssemblyReference.cache
