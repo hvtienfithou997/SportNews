@@ -1,5 +1,4 @@
-﻿using System;
-using SportNews247.Database;
+﻿using SportNews247.Database;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;

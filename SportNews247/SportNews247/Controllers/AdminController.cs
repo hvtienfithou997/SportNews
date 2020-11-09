@@ -56,44 +56,57 @@ namespace SportNews247.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult ThemTinMoi(TinTuc tin)
         {
-            if (tin?.tieu_de == null || tin.tieu_de.Trim().Length == 0)
+            if (IsAdmin())
             {
-                ModelState.AddModelError("tieu_de", "Tiêu đề bị bỏ trống.");
-            }
-            try
-            {
-                tin.id = Guid.NewGuid().ToString();
-                tin.ngay_tao = DateTime.Now;
-                tin.trang_thai = (int)TrangThai.CHO_XET_DUYET;
+                if (tin?.tieu_de == null || tin.tieu_de.Trim().Length == 0)
+                {
+                    ModelState.AddModelError("tieu_de", "Tiêu đề bị bỏ trống.");
+                }
+                try
+                {
+                    tin.id = Guid.NewGuid().ToString();
+                    tin.ngay_tao = DateTime.Now;
+                    tin.trang_thai = (int)TrangThai.CHO_XET_DUYET;
 
-                db.TinTucs.Add(tin);
-                db.SaveChanges();
+                    db.TinTucs.Add(tin);
+                    db.SaveChanges();
 
-                return RedirectToAction("GetAllTin");
+                    return RedirectToAction("GetAllTin");
+                }
+                catch (Exception ex)
+                {
+                    TempData["Message"] = (ex.InnerException ?? ex).Message;
+                    return RedirectToAction("GetAllTin");
+                }
             }
-            catch (Exception ex)
-            {
-                TempData["Message"] = (ex.InnerException ?? ex).Message;
-                return RedirectToAction("GetAllTin");
-            }
+
+            TempData["Message"] = "Bạn không có quyền";
+            return View();
+
         }
 
         public ActionResult CheckNew(string id, string stt)
         {
-            if (!string.IsNullOrEmpty(stt))
+            if (IsAdmin())
             {
-                var tin_tuc = db.TinTucs.Find(id);
-                if (stt == "ok")
+                if (!string.IsNullOrEmpty(stt))
                 {
-                    tin_tuc.trang_thai = (int)TrangThai.DA_DUYET;
-                }
-                else
-                {
-                    tin_tuc.trang_thai = (int)TrangThai.BI_TU_CHOI;
-                }
+                    var tin_tuc = db.TinTucs.Find(id);
+                    if (stt == "ok")
+                    {
+                        tin_tuc.trang_thai = (int)TrangThai.DA_DUYET;
+                    }
+                    else
+                    {
+                        tin_tuc.trang_thai = (int)TrangThai.BI_TU_CHOI;
+                    }
 
-                db.SaveChanges();
+                    db.SaveChanges();
+                }
+                return RedirectToAction("GetAllTin");
             }
+
+            TempData["Message"] = "Bạn không có quyền";
             return RedirectToAction("GetAllTin");
         }
 
@@ -111,14 +124,13 @@ namespace SportNews247.Controllers
         [HttpPost]
         public ActionResult AddUser(User u)
         {
-            if (u.per < 5 && u.per > 0)
+            if (IsAdmin() && u.per < 5 && u.per > 0)
             {
                 u.id = Guid.NewGuid().ToString();
                 db.Users.Add(u);
                 db.SaveChanges();
                 return RedirectToAction("TaiKhoan");
             }
-
             return View();
         }
 
@@ -137,23 +149,35 @@ namespace SportNews247.Controllers
         [HttpPost]
         public ActionResult EditUser(User u)
         {
-            if (u?.username.Trim().Length == 0 && u.password.Trim().Length == 0)
+            if (IsAdmin())
             {
-                TempData["Message"] = $"Bạn cần nhập đầy đủ thông tin";
+                if (u?.username.Trim().Length == 0 && u.password.Trim().Length == 0)
+                {
+                    TempData["Message"] = $"Bạn cần nhập đầy đủ thông tin";
+                }
+
+                db.SaveChanges();
+                return RedirectToAction("TaiKhoan");
             }
 
-            db.SaveChanges();
             return View();
         }
 
-        
         public ActionResult DeleteUser(string id)
         {
-            var user = db.Users.Find(id);
-            if (user != null) db.Users.Remove(user);
-            db.SaveChanges();
+            if (IsAdmin())
+            {
+                var user = db.Users.Find(id);
+                if (user != null) db.Users.Remove(user);
+                db.SaveChanges();
+                return RedirectToAction("TaiKhoan");
+            }
+            TempData["Message"] = "Bạn không có quyền xóa nhân viên này";
             return RedirectToAction("TaiKhoan");
         }
+
+        // check quyền admin
+       
 
         public enum TrangThai
         {

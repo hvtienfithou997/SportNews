@@ -10,12 +10,13 @@ namespace SportNews247.Controllers
         // GET: User
         public ActionResult MyNews()
         {
-            var user = (User)Session["User"];
+            var user = (User) Session["User"];
             if (user != null)
             {
                 var getByUser = db.TinTucs.Where(x => x.id_user == user.id);
                 return View(getByUser);
             }
+
             return View();
         }
 
@@ -33,11 +34,12 @@ namespace SportNews247.Controllers
             {
                 ModelState.AddModelError("tieu_de", "Tiêu đề bị bỏ trống.");
             }
+
             try
             {
                 tin.id = Guid.NewGuid().ToString();
                 tin.ngay_tao = DateTime.Now;
-                tin.trang_thai = (int)TrangThai.CHO_XET_DUYET;
+                tin.trang_thai = (int) TrangThai.CHO_XET_DUYET;
 
                 db.TinTucs.Add(tin);
                 db.SaveChanges();
@@ -51,7 +53,19 @@ namespace SportNews247.Controllers
             }
         }
 
-        public enum TrangThai
+        public ActionResult SuaTinTuc(string id)
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult SuaTinTuc(TinTuc tin)
+        {
+            return View();
+        }
+
+
+    public enum TrangThai
         {
             BI_TU_CHOI,
             CHO_XET_DUYET,
