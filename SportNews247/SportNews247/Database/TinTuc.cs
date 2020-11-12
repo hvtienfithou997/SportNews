@@ -11,13 +11,17 @@ namespace SportNews247.Database
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class TinTuc
     {
         public string id { get; set; }
         public string id_dm { get; set; }
         public string id_user { get; set; }
         public string tieu_de { get; set; }
+        [DataType(DataType.Upload)]
+        [Display(Name = "Upload File")]
+        [Required(ErrorMessage = "Please choose file to upload.")]
         public string img { get; set; }
         public string tom_tat { get; set; }
         public string noi_dung { get; set; }

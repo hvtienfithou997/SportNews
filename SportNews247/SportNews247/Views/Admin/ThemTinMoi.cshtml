@@ -7,7 +7,7 @@
 @{ User user = Session["User"] as User; }
 <h2>Thêm tin mới, bạn đang đăng nhập bằng tài khoản admin</h2>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("ThemTinMoi", "Admin", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
@@ -41,12 +41,12 @@
             <div class="col-md-10">
 
                 @*<input type="text" class="form-control" disabled readonly value="@user.name" />
-                <input type="text" class="form-control d-none" disabled readonly name="id_user" value="@user.id" />*@
-                
+                    <input type="text" class="form-control d-none" disabled readonly name="id_user" value="@user.id" />*@
+
                 <select class="form-control" name="id_user" id="id_user">
                     <option selected value="@user.id">@user.name</option>
                 </select>
-                
+
             </div>
         </div>
 
@@ -61,7 +61,8 @@
         <div class="form-group">
             @Html.LabelFor(model => model.img, "Ảnh đại diện", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.img, new { htmlAttributes = new { @class = "form-control" } })
+                @*@Html.EditorFor(model => model.img, new { htmlAttributes = new { @class = "form-control", type = "file" } })*@
+                <input type="file" name="img" id="img" width="100%"/>
                 @Html.ValidationMessageFor(model => model.img, "", new { @class = "text-danger" })
             </div>
         </div>

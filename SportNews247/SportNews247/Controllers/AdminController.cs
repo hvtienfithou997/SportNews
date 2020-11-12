@@ -1,6 +1,8 @@
 ﻿using SportNews247.Database;
 using System;
+using System.IO;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 
 namespace SportNews247.Controllers
@@ -54,7 +56,7 @@ namespace SportNews247.Controllers
         }
 
         [HttpPost, ValidateInput(false)]
-        public ActionResult ThemTinMoi(TinTuc tin)
+        public ActionResult ThemTinMoi(TinTuc tin, HttpPostedFileBase img)
         {
             if (IsAdmin())
             {
@@ -64,10 +66,18 @@ namespace SportNews247.Controllers
                 }
                 try
                 {
+                    
                     tin.id = Guid.NewGuid().ToString();
                     tin.ngay_tao = DateTime.Now;
                     tin.trang_thai = (int)TrangThai.CHO_XET_DUYET;
-
+                    if (img.ContentLength > 0)
+                    {
+                        string fileName = Path.GetFileName(img.FileName);
+                        string path = Path.Combine(Server.MapPath("~/Source/img"), fileName);
+                        img.SaveAs(path);
+                        tin.img = fileName;
+                    }
+                    
                     db.TinTucs.Add(tin);
                     db.SaveChanges();
 
